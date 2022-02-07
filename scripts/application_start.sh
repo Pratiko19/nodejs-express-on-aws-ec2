@@ -1,18 +1,4 @@
 #!/bin/bash
 
-#give permission for everything in the express-app directory
-sudo chmod -R 777 /home/ec2-user/express-app
-
-#navigate into our working directory where we have all our github files
-cd /home/ec2-user/express-app
-
-#add npm and node to path
-export NVM_DIR="$HOME/.nvm"	
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm	
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # loads nvm bash_completion (node is in path now)
-
-#install node modules
-npm install
-
-#start our node app in the background
-node app.js > app.out.log 2> app.err.log < /dev/null & 
+aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 907221691199.dkr.ecr.ap-southeast-1.amazonaws.com
+docke run -it -d -p 80:8080 907221691199.dkr.ecr.ap-southeast-1.amazonaws.com/docker_deploy:latest
